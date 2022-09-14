@@ -1,0 +1,314 @@
+mysql> Create Database Day31Employee_PayRole;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++-----------------------+
+| Database              |
++-----------------------+
+| cascad                |
+| day31employee_payrole |
+| information_schema    |
+| mysql                 |
+| office                |
+| performance_schema    |
+| praveendb1            |
+| praveendb2            |
+| record_company        |
+| sql_hr                |
+| sql_inventory         |
+| sql_invoicing         |
+| sql_store             |
+| studentdb             |
+| sys                   |
++-----------------------+
+15 rows in set (0.00 sec)
+
+mysql> use day31employee_payrole;
+Database changed
+mysql> ^C
+mysql> create table employee_payroll(id int not null auto_increment, name varchar(50) not null,salary Double not null,startDate Date not null, primary key(id) );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> select * from employee_payrole;
+ERROR 1146 (42S02): Table 'day31employee_payrole.employee_payrole' doesn't exist
+mysql> select * from employee_payroll;
+Empty set (0.02 sec)
+
+mysql> select * from employee_payroll
+    -> select * from employee_payroll;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from employee_payroll' at line 2
+mysql> show tables;
++---------------------------------+
+| Tables_in_day31employee_payrole |
++---------------------------------+
+| employee_payroll                |
++---------------------------------+
+1 row in set (0.01 sec)
+
+mysql> select * from employee_payroll
+    -> select * from employee_payroll;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from employee_payroll' at line 2
+mysql> select * from employee_payroll;
+Empty set (0.00 sec)
+
+mysql> insert into employee_payroll(name,salary,startDate)values('Praveen',40000,'2022-9-14');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee_payroll(name,salary,startDate)values('Ganu',50000,'2022-9-15');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee_payroll(name,salary,startDate)values('Ajay',80000,'2022-9-13');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee_payroll(name,salary,startDate)values('Kumar',45000,'2022-9-14');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee_payroll(name,salary,startDate)values('Nagraj',35000,'2022-9-11');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee_payroll;
++----+---------+--------+------------+
+| id | name    | salary | startDate  |
++----+---------+--------+------------+
+|  1 | Praveen |  40000 | 2022-09-14 |
+|  2 | Ganu    |  50000 | 2022-09-15 |
+|  3 | Ajay    |  80000 | 2022-09-13 |
+|  4 | Kumar   |  45000 | 2022-09-14 |
+|  5 | Nagraj  |  35000 | 2022-09-11 |
++----+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee_payroll where salary > 40000;
++----+-------+--------+------------+
+| id | name  | salary | startDate  |
++----+-------+--------+------------+
+|  2 | Ganu  |  50000 | 2022-09-15 |
+|  3 | Ajay  |  80000 | 2022-09-13 |
+|  4 | Kumar |  45000 | 2022-09-14 |
++----+-------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee_payroll where name = Ganu;
+ERROR 1054 (42S22): Unknown column 'Ganu' in 'where clause'
+mysql> select * from employee_payroll where name =" Ganu";
+Empty set (0.00 sec)
+
+mysql> select * from employee_payroll where name ='Ganu';
++----+------+--------+------------+
+| id | name | salary | startDate  |
++----+------+--------+------------+
+|  2 | Ganu |  50000 | 2022-09-15 |
++----+------+--------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee_payroll where id =2,3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',3' at line 1
+mysql> select * from employee_payroll where id =2;
++----+------+--------+------------+
+| id | name | salary | startDate  |
++----+------+--------+------------+
+|  2 | Ganu |  50000 | 2022-09-15 |
++----+------+--------+------------+
+1 row in set (0.00 sec)
+
+mysql> Alter table employee_payroll Add Gender Char(1) after name;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  desc employee_payroll;
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int         | NO   | PRI | NULL    | auto_increment |
+| name      | varchar(50) | NO   |     | NULL    |                |
+| Gender    | char(1)     | YES  |     | NULL    |                |
+| salary    | double      | NO   |     | NULL    |                |
+| startDate | date        | NO   |     | NULL    |                |
++-----------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> select * from employee_payroll;
++----+---------+--------+--------+------------+
+| id | name    | Gender | salary | startDate  |
++----+---------+--------+--------+------------+
+|  1 | Praveen | NULL   |  40000 | 2022-09-14 |
+|  2 | Ganu    | NULL   |  50000 | 2022-09-15 |
+|  3 | Ajay    | NULL   |  80000 | 2022-09-13 |
+|  4 | Kumar   | NULL   |  45000 | 2022-09-14 |
+|  5 | Nagraj  | NULL   |  35000 | 2022-09-11 |
++----+---------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update employee_payroll set Gender = 'M' where name = 'Praveen';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+---------+--------+--------+------------+
+| id | name    | Gender | salary | startDate  |
++----+---------+--------+--------+------------+
+|  1 | Praveen | M      |  40000 | 2022-09-14 |
+|  2 | Ganu    | NULL   |  50000 | 2022-09-15 |
+|  3 | Ajay    | NULL   |  80000 | 2022-09-13 |
+|  4 | Kumar   | NULL   |  45000 | 2022-09-14 |
+|  5 | Nagraj  | NULL   |  35000 | 2022-09-11 |
++----+---------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update employee_payroll set Gender = 'M' where name = 'Nagarj';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+---------+--------+--------+------------+
+| id | name    | Gender | salary | startDate  |
++----+---------+--------+--------+------------+
+|  1 | Praveen | M      |  40000 | 2022-09-14 |
+|  2 | Ganu    | NULL   |  50000 | 2022-09-15 |
+|  3 | Ajay    | NULL   |  80000 | 2022-09-13 |
+|  4 | Kumar   | NULL   |  45000 | 2022-09-14 |
+|  5 | Nagraj  | NULL   |  35000 | 2022-09-11 |
++----+---------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update employee_payroll set Gender = 'M' where name = 'Nagaraj';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+---------+--------+--------+------------+
+| id | name    | Gender | salary | startDate  |
++----+---------+--------+--------+------------+
+|  1 | Praveen | M      |  40000 | 2022-09-14 |
+|  2 | Ganu    | NULL   |  50000 | 2022-09-15 |
+|  3 | Ajay    | NULL   |  80000 | 2022-09-13 |
+|  4 | Kumar   | NULL   |  45000 | 2022-09-14 |
+|  5 | Nagraj  | NULL   |  35000 | 2022-09-11 |
++----+---------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update employee_payroll set Gender = 'M' where name = 'Nagraj';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+---------+--------+--------+------------+
+| id | name    | Gender | salary | startDate  |
++----+---------+--------+--------+------------+
+|  1 | Praveen | M      |  40000 | 2022-09-14 |
+|  2 | Ganu    | NULL   |  50000 | 2022-09-15 |
+|  3 | Ajay    | NULL   |  80000 | 2022-09-13 |
+|  4 | Kumar   | NULL   |  45000 | 2022-09-14 |
+|  5 | Nagraj  | M      |  35000 | 2022-09-11 |
++----+---------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update employee_payroll set Gender = 'F' where name = 'Ganu';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+---------+--------+--------+------------+
+| id | name    | Gender | salary | startDate  |
++----+---------+--------+--------+------------+
+|  1 | Praveen | M      |  40000 | 2022-09-14 |
+|  2 | Ganu    | F      |  50000 | 2022-09-15 |
+|  3 | Ajay    | NULL   |  80000 | 2022-09-13 |
+|  4 | Kumar   | NULL   |  45000 | 2022-09-14 |
+|  5 | Nagraj  | M      |  35000 | 2022-09-11 |
++----+---------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select Avg(salary) from employee_payroll where Gender = 'F' Group By Gender;
++-------------+
+| Avg(salary) |
++-------------+
+|       50000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select Avg(salary) from employee_payroll where Gender = 'M' Group By Gender;
++-------------+
+| Avg(salary) |
++-------------+
+|       37500 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select Avg(salary) from employee_payroll Group By Gender;
++-------------+
+| Avg(salary) |
++-------------+
+|       37500 |
+|       50000 |
+|       62500 |
++-------------+
+3 rows in set (0.00 sec)
+
+mysql> select Gender, Avg(salary) from employee_payroll Group By Gender;
++--------+-------------+
+| Gender | Avg(salary) |
++--------+-------------+
+| M      |       37500 |
+| F      |       50000 |
+| NULL   |       62500 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select Gender, Count(name) from employee_payroll Group By Gender;
++--------+-------------+
+| Gender | Count(name) |
++--------+-------------+
+| M      |           2 |
+| F      |           1 |
+| NULL   |           2 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select Gender, Sum(salary) from employee_payroll Group By Gender;
++--------+-------------+
+| Gender | Sum(salary) |
++--------+-------------+
+| M      |       75000 |
+| F      |       50000 |
+| NULL   |      125000 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select Sum(salary) from employee_payroll where Gender = 'M' Group By Gender;
++-------------+
+| Sum(salary) |
++-------------+
+|       75000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select Max(salary) from employee_payroll where Gender = 'F' Group By Gender;
++-------------+
+| Max(salary) |
++-------------+
+|       50000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select Min(salary) from employee_payroll where Gender = 'M' Group By Gender;
++-------------+
+| Min(salary) |
++-------------+
+|       35000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee_payroll;
++----+---------+--------+--------+------------+
+| id | name    | Gender | salary | startDate  |
++----+---------+--------+--------+------------+
+|  1 | Praveen | M      |  40000 | 2022-09-14 |
+|  2 | Ganu    | F      |  50000 | 2022-09-15 |
+|  3 | Ajay    | NULL   |  80000 | 2022-09-13 |
+|  4 | Kumar   | NULL   |  45000 | 2022-09-14 |
+|  5 | Nagraj  | M      |  35000 | 2022-09-11 |
++----+---------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql>
